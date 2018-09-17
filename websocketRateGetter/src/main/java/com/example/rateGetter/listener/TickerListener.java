@@ -2,10 +2,12 @@ package com.example.rateGetter.listener;
 
 import com.example.rateGetter.config.URLS;
 import com.example.rateGetter.eventBus.Addresses;
+import com.example.rateGetter.repositories.RateRepository;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.codec.BodyCodec;
@@ -30,7 +32,9 @@ public class TickerListener extends AbstractVerticle {
       if (ar.succeeded()) {
         Double rate = ar.result().body()
           .getJsonArray("result").getJsonObject(0).getDouble("Last");
-        vertx.eventBus().publish(Addresses.PUBLISH_TO_BROWSER, rate);
+        SharedData data = vertx.sharedData();
+        RateRepository rateRepository = new RateRepository(data);
+        rateRepository.update(rate);
       } else {
         System.out.println("ar did not succeed");
       }

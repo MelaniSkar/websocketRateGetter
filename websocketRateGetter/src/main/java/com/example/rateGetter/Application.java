@@ -20,8 +20,10 @@ public class Application {
   @PostConstruct
   public void deployVerticles() {
     Vertx vertx = Vertx.vertx();
-    vertx.deployVerticle(WebSocketServer.class.getName());
-    vertx.deployVerticle(TickerListener.class.getName());
     vertx.deployVerticle(Ticker.class.getName());
+    vertx.deployVerticle(TickerListener.class.getName());
+    vertx.deployVerticle(WebSocketServer.class.getName());
+
+
   }
 }

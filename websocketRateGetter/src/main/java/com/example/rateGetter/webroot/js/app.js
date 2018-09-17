@@ -5,11 +5,15 @@ function init() {
 let eventBus;
 
 function registerHandler() {
-  eventBus = new EventBus('http://localhost:8080/getrate');
+  eventBus = new EventBus('http://localhost:8080/eventbus');
   eventBus.onopen = function () {
-    eventBus.registerHandler("publish_to_browser", function (error, message) {
-      const rate = message.body;
-      document.getElementById('current_rate').innerHTML = rate;
+    eventBus.registerHandler('out', function (error, message) {
+      const counter = message.body;
+      document.getElementById('rate').innerHTML = counter;
     });
   }
+}
+
+function increment() {
+  eventBus.send('in')
 }
