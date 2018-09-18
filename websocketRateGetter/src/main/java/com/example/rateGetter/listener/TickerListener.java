@@ -16,28 +16,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class TickerListener extends AbstractVerticle {
 
-  @Override
-  public void start() {
-    vertx.eventBus().consumer(Addresses.MAKE_REQUEST_ADDRESS, message -> {
-      WebClient client = WebClient.create(vertx);
-      client
-        .getAbs(URLS.BITTREX) //creates Http GET request
-        .as(BodyCodec.jsonObject())
-        .send(handleResponse());
-    });
-  }
+    @Override
+    public void start() {
+        vertx.eventBus().consumer(Addresses.MAKE_REQUEST_ADDRESS, message -> {
+            WebClient client = WebClient.create(vertx);
+            client
+                    .getAbs(URLS.BITTREX) //creates Http GET request
+                    .as(BodyCodec.jsonObject())
+                    .send(handleResponse());
+        });
+    }
 
-  public Handler<AsyncResult<HttpResponse<JsonObject>>> handleResponse() {
-    return ar -> {
-      if (ar.succeeded()) {
-        Double rate = ar.result().body()
-          .getJsonArray("result").getJsonObject(0).getDouble("Last");
-        SharedData data = vertx.sharedData();
-        RateRepository rateRepository = new RateRepository(data);
-        rateRepository.update(rate);
-      } else {
-        System.out.println("ar did not succeed");
-      }
-    };
-  }
+    public Handler<AsyncResult<HttpResponse<JsonObject>>> handleResponse() {
+        return ar -> {
+            if (ar.succeeded()) {
+                Double rate = ar.result().body()
+                        .getJsonArray("result").getJsonObject(0).getDouble("Last");
+                SharedData data = vertx.sharedData();
+                RateRepository rateRepository = new RateRepository(data);
+                rateRepository.update(rate);
+            } else {
+                System.out.println(ar.cause());
+            }
+        };
+    }
 }

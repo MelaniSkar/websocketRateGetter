@@ -4,6 +4,17 @@
  * This is a general purpose Gradle build.
  * Learn how to create Gradle builds at https://guides.gradle.org/creating-new-gradle-builds/
  */
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
 plugins {
   id 'java'
   id 'application'
@@ -24,9 +35,6 @@ group = 'com.example'
 version = '1.0.0-SNAPSHOT'
 
 sourceCompatibility = '1.8'
-mainClassName = 'io.vertx.core.Launcher'
-
-def mainVerticleName = 'com.example.websocketRateGetter.MainVerticle'
 def watchForChange = 'src/**/*'
 def doOnChange = './gradlew classes'
 
@@ -39,26 +47,9 @@ dependencies {
   implementation "io.vertx:vertx-amqp-bridge:$vertxVersion"
 
   compile "org.springframework.boot:spring-boot-starter:${project.'version.spring-boot'}"
-  compile('org.springframework.boot:spring-boot-starter-integration')
-  compile('org.springframework.boot:spring-boot-starter-security')
-  compile('org.springframework.boot:spring-boot-starter-web')
 
   testImplementation "io.vertx:vertx-junit5:$vertxVersion"
   testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
-}
-
-
-shadowJar {
-  classifier = 'fat'
-  manifest {
-    attributes 'Main-Verticle': mainVerticleName
-  }
-  mergeServiceFiles {
-    include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
-  }
-  into 'webroot', {
-    from 'webroot'
-  }
 }
 
 test {
@@ -66,10 +57,6 @@ test {
   testLogging {
     events 'PASSED', 'FAILED', 'SKIPPED'
   }
-}
-
-run {
-  args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$mainClassName", "--on-redeploy=$doOnChange"]
 }
 
 task wrapper(type: Wrapper) {

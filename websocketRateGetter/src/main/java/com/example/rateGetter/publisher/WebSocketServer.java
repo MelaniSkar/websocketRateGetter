@@ -1,10 +1,8 @@
 package com.example.rateGetter.publisher;
 
-import com.example.rateGetter.eventBus.Addresses;
 import com.example.rateGetter.repositories.RateRepository;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.EventBus;
-import io.vertx.core.shareddata.Shareable;
 import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.web.Router;
@@ -16,32 +14,32 @@ import org.springframework.stereotype.Component;
 @Component
 public class WebSocketServer extends AbstractVerticle {
 
-  @Override
-  public void start() {
-    Router router = Router.router(vertx);
+    @Override
+    public void start() {
+        Router router = Router.router(vertx);
 
-    router.route("/eventbus/*").handler(getRateHandler());
-    router.route().handler(staticHandler());
+        router.route("/eventbus/*").handler(getRateHandler());
+        router.route().handler(staticHandler());
 
-    vertx.createHttpServer()
-      .requestHandler(router::accept)
-      .listen(8080);
-  }
+        vertx.createHttpServer()
+                .requestHandler(router::accept)
+                .listen(8080);
+    }
 
-  private SockJSHandler getRateHandler() {
-    BridgeOptions options = new BridgeOptions()
-      .addOutboundPermitted(new PermittedOptions().setAddressRegex("out"));
-    SharedData data = vertx.sharedData();
-    RateRepository rateRepository = new RateRepository(data);
-    EventBus eventBus = vertx.eventBus();
-    RateHandler rateHandler = new RateHandler(eventBus, rateRepository);
-    SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
-    return sockJSHandler.bridge(options, rateHandler);
+    private SockJSHandler getRateHandler() {
+        BridgeOptions options = new BridgeOptions()
+                .addOutboundPermitted(new PermittedOptions().setAddressRegex("out"));
+        SharedData data = vertx.sharedData();
+        RateRepository rateRepository = new RateRepository(data);
+        EventBus eventBus = vertx.eventBus();
+        RateHandler rateHandler = new RateHandler(eventBus, rateRepository);
+        SockJSHandler sockJSHandler = SockJSHandler.create(vertx);
+        return sockJSHandler.bridge(options, rateHandler);
 
-  }
+    }
 
-  private StaticHandler staticHandler() {
-    return StaticHandler.create()
-      .setCachingEnabled(false);
-  }
+    private StaticHandler staticHandler() {
+        return StaticHandler.create()
+                .setCachingEnabled(false);
+    }
 }
