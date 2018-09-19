@@ -1,4 +1,4 @@
-package com.example.rateGetter.publisher;
+package com.example.rateGetter.verticle;
 
 import com.example.rateGetter.eventBus.Addresses;
 import io.vertx.core.AbstractVerticle;

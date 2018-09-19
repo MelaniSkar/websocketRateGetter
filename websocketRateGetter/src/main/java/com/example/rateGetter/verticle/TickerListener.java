@@ -1,4 +1,4 @@
-package com.example.rateGetter.listener;
+package com.example.rateGetter.verticle;
 
 import com.example.rateGetter.config.URLS;
 import com.example.rateGetter.eventBus.Addresses;

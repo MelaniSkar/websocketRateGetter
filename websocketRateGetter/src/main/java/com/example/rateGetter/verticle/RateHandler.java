@@ -1,4 +1,4 @@
-package com.example.rateGetter.publisher;
+package com.example.rateGetter.verticle;
 
 import com.example.rateGetter.repositories.RateRepository;
 import io.vertx.core.Handler;
