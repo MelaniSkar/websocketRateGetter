@@ -1,9 +1,9 @@
-package com.example.rateGetter;
+package com.example.websocketRateGetter;
 
 
-import com.example.rateGetter.listener.TickerListener;
-import com.example.rateGetter.publisher.Ticker;
-import com.example.rateGetter.publisher.WebSocketServer;
+import com.example.websocketRateGetter.listener.TickerListener;
+import com.example.websocketRateGetter.publisher.Ticker;
+import com.example.websocketRateGetter.publisher.WebSocketServer;
 import io.vertx.core.Vertx;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

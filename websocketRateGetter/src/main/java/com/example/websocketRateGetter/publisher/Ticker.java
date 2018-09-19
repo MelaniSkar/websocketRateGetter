@@ -1,6 +1,6 @@
-package com.example.rateGetter.publisher;
+package com.example.websocketRateGetter.publisher;
 
-import com.example.rateGetter.eventBus.Addresses;
+import com.example.websocketRateGetter.eventBus.Addresses;
 import io.vertx.core.AbstractVerticle;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,8 @@
-package com.example.rateGetter.listener;
+package com.example.websocketRateGetter.listener;
 
-import com.example.rateGetter.config.URLS;
-import com.example.rateGetter.eventBus.Addresses;
-import com.example.rateGetter.repositories.RateRepository;
+import com.example.websocketRateGetter.config.URLS;
+import com.example.websocketRateGetter.eventBus.Addresses;
+import com.example.websocketRateGetter.repositories.RateRepository;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;

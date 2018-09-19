@@ -1,6 +1,6 @@
-package com.example.rateGetter.publisher;
+package com.example.websocketRateGetter.publisher;
 
-import com.example.rateGetter.repositories.RateRepository;
+import com.example.websocketRateGetter.repositories.RateRepository;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.shareddata.SharedData;
