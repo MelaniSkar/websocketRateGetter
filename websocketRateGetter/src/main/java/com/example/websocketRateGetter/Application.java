@@ -20,10 +20,14 @@ public class Application {
   @PostConstruct
   public void deployVerticles() {
     Vertx vertx = Vertx.vertx();
-    vertx.deployVerticle(Ticker.class.getName());
-    vertx.deployVerticle(TickerListener.class.getName());
-    vertx.deployVerticle(WebSocketServer.class.getName());
-
-
+    vertx.deployVerticle(TickerListener.class.getName(), res -> {
+        if (res.succeeded()) {
+            vertx.deployVerticle(Ticker.class.getName(), res1 -> {
+                if (res1.succeeded()) {
+                    vertx.deployVerticle(WebSocketServer.class.getName());
+                }
+            });
+        }
+    });
   }
 }
