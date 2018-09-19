@@ -1,4 +1,4 @@
-package com.example.rateGetter.eventBus;
+package com.example.websocketRateGetter.eventBus;
 
 public interface Addresses {
     String MAKE_REQUEST_ADDRESS = "make_request";

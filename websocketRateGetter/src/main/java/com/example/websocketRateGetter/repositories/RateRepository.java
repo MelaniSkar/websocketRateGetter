@@ -1,4 +1,4 @@
-package com.example.rateGetter.repositories;
+package com.example.websocketRateGetter.repositories;
 
 import io.vertx.core.shareddata.LocalMap;
 import io.vertx.core.shareddata.SharedData;

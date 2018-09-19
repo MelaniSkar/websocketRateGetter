@@ -1,4 +1,4 @@
-package com.example.rateGetter.config;
+package com.example.websocketRateGetter.config;
 
 public class UrlBuilder {
 
