@@ -1,6 +1,6 @@
-package com.example.rateGetter.verticle;
+package com.example.websocketRateGetter.verticle;
 
-import com.example.rateGetter.repositories.RateRepository;
+import com.example.websocketRateGetter.repositories.RateRepository;
 import io.vertx.core.Handler;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.logging.Logger;
