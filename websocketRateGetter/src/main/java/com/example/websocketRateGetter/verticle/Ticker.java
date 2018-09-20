@@ -2,7 +2,6 @@ package com.example.websocketRateGetter.verticle;
 
 import com.example.websocketRateGetter.eventBus.Addresses;
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.json.JsonObject;
 import org.springframework.stereotype.Component;
 
 

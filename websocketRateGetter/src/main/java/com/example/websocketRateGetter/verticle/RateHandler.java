@@ -8,11 +8,9 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.bridge.BridgeEventType;
 import io.vertx.ext.web.handler.sockjs.BridgeEvent;
-import org.knowm.xchange.bitfinex.v2.Bitfinex;
 import org.knowm.xchange.bitfinex.v2.BitfinexExchange;
 import org.knowm.xchange.bittrex.BittrexExchange;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 public class RateHandler implements Handler<BridgeEvent> {

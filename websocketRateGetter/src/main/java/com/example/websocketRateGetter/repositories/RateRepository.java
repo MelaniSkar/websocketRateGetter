@@ -2,8 +2,6 @@ package com.example.websocketRateGetter.repositories;
 
 import io.vertx.core.shareddata.LocalMap;
 import io.vertx.core.shareddata.SharedData;
-import org.knowm.xchange.bitfinex.v2.BitfinexExchange;
-import org.knowm.xchange.bittrex.BittrexExchange;
 
 import java.util.Optional;
 
