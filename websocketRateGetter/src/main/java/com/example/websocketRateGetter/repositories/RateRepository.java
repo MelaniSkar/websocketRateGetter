@@ -2,6 +2,8 @@ package com.example.websocketRateGetter.repositories;
 
 import io.vertx.core.shareddata.LocalMap;
 import io.vertx.core.shareddata.SharedData;
+import org.knowm.xchange.bitfinex.v2.BitfinexExchange;
+import org.knowm.xchange.bittrex.BittrexExchange;
 
 import java.util.Optional;
 
@@ -13,15 +15,24 @@ public class RateRepository {
         this.data = data;
     }
 
-    public Optional<Double> get() {
-        LocalMap<String, String> rate = data.getLocalMap("key");
-        return Optional.of(rate)
+    public Optional<Double> get(String classname) {
+        LocalMap<String, String> repo = data.getLocalMap(classname);
+        return Optional.of(repo)
                 .filter(map -> !map.isEmpty())
                 .map(map -> Double.valueOf(map.get("rate")));
     }
 
-    public void update(Double rate) {
-        LocalMap<String, String> map = data.getLocalMap("key");
+    public Optional<Double> getPrevRate(String classname) {
+        LocalMap<String, String> repo = data.getLocalMap(classname);
+        return Optional.of(repo)
+                .filter(map -> !map.isEmpty())
+                .map(map -> Double.valueOf(map.get("prevRate")));
+    }
+
+    public void update(String classname, Double rate) {
+        Optional<Double> currentRate = get(classname);
+        LocalMap<String, String> map = data.getLocalMap(classname);
+        map.put("prevRate", currentRate.toString());
         map.put("rate", rate.toString());
     }
 }

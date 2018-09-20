@@ -1,7 +1,8 @@
 package com.example.websocketRateGetter;
 
 
-import com.example.websocketRateGetter.verticle.TickerListener;
+import com.example.websocketRateGetter.verticle.BitfinexRateGetter;
+import com.example.websocketRateGetter.verticle.BittrexRateGetter;
 import com.example.websocketRateGetter.verticle.Ticker;
 import com.example.websocketRateGetter.verticle.WebSocketServer;
 import io.vertx.core.Vertx;
@@ -20,11 +21,15 @@ public class Application {
   @PostConstruct
   public void deployVerticles() {
     Vertx vertx = Vertx.vertx();
-    vertx.deployVerticle(TickerListener.class.getName(), res -> {
+    vertx.deployVerticle(BitfinexRateGetter.class.getName(), res -> {
         if (res.succeeded()) {
-            vertx.deployVerticle(Ticker.class.getName(), res1 -> {
+            vertx.deployVerticle(BittrexRateGetter.class.getName(), res1 -> {
                 if (res1.succeeded()) {
-                    vertx.deployVerticle(WebSocketServer.class.getName());
+                    vertx.deployVerticle(Ticker.class.getName(), res2 -> {
+                        if(res2.succeeded()) {
+                            vertx.deployVerticle(WebSocketServer.class.getName());
+                        }
+                    });
                 }
             });
         }

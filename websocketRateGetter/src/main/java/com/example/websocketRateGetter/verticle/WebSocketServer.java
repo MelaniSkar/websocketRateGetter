@@ -1,5 +1,6 @@
 package com.example.websocketRateGetter.verticle;
 
+import com.example.websocketRateGetter.eventBus.Addresses;
 import com.example.websocketRateGetter.repositories.RateRepository;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.eventbus.EventBus;
@@ -17,10 +18,8 @@ public class WebSocketServer extends AbstractVerticle {
     @Override
     public void start() {
         Router router = Router.router(vertx);
-
         router.route("/eventbus/*").handler(getRateHandler());
         router.route().handler(staticHandler());
-
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8080);
@@ -28,7 +27,8 @@ public class WebSocketServer extends AbstractVerticle {
 
     private SockJSHandler getRateHandler() {
         BridgeOptions options = new BridgeOptions()
-                .addOutboundPermitted(new PermittedOptions().setAddressRegex("out"));
+                .addOutboundPermitted(new PermittedOptions().setAddressRegex(Addresses.PUBLISH_BITFINEX_RATE))
+                .addOutboundPermitted(new PermittedOptions().setAddressRegex(Addresses.PUBLISH_BITTREX_RATE));
         SharedData data = vertx.sharedData();
         RateRepository rateRepository = new RateRepository(data);
         EventBus eventBus = vertx.eventBus();

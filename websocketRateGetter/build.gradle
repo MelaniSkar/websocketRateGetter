@@ -16,19 +16,19 @@ buildscript {
 }
 
 plugins {
-  id 'java'
-  id 'application'
-  id 'com.github.johnrengelman.shadow' version '2.0.4'
-  id "org.springframework.boot" version "2.0.4.RELEASE"
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+    id "org.springframework.boot" version "2.0.4.RELEASE"
 }
 ext {
-  vertxVersion = '3.5.3'
-  junitJupiterEngineVersion = '5.2.0'
+    vertxVersion = '3.5.3'
+    junitJupiterEngineVersion = '5.2.0'
 }
 
 repositories {
-  mavenLocal()
-  jcenter()
+    mavenLocal()
+    jcenter()
 }
 
 group = 'com.example'
@@ -40,25 +40,29 @@ def doOnChange = './gradlew classes'
 
 dependencies {
 
-  implementation "io.vertx:vertx-core:$vertxVersion"
-  implementation "io.vertx:vertx-web-client:$vertxVersion"
-  implementation "io.vertx:vertx-core:$vertxVersion"
-  implementation "io.vertx:vertx-web:$vertxVersion"
-  implementation "io.vertx:vertx-amqp-bridge:$vertxVersion"
+    implementation "io.vertx:vertx-core:$vertxVersion"
+    implementation "io.vertx:vertx-web-client:$vertxVersion"
+    implementation "io.vertx:vertx-core:$vertxVersion"
+    implementation "io.vertx:vertx-web:$vertxVersion"
+    implementation "io.vertx:vertx-amqp-bridge:$vertxVersion"
 
-  compile "org.springframework.boot:spring-boot-starter:${project.'version.spring-boot'}"
+    compile "org.springframework.boot:spring-boot-starter:${project.'version.spring-boot'}"
+    compile group: 'org.knowm.xchange', name: 'xchange-core', version: '4.3.10'
+    compile group: 'org.knowm.xchange', name: 'xchange-bittrex', version: '4.3.10'
+    compile group: 'org.knowm.xchange', name: 'xchange-bitfinex', version: '4.3.10'
 
-  testImplementation "io.vertx:vertx-junit5:$vertxVersion"
-  testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
+
+    testImplementation "io.vertx:vertx-junit5:$vertxVersion"
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:$junitJupiterEngineVersion")
 }
 
 test {
-  useJUnitPlatform()
-  testLogging {
-    events 'PASSED', 'FAILED', 'SKIPPED'
-  }
+    useJUnitPlatform()
+    testLogging {
+        events 'PASSED', 'FAILED', 'SKIPPED'
+    }
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '4.6'
+    gradleVersion = '4.6'
 }

@@ -2,6 +2,7 @@ package com.example.websocketRateGetter.verticle;
 
 import com.example.websocketRateGetter.eventBus.Addresses;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.json.JsonObject;
 import org.springframework.stereotype.Component;
 
 
@@ -11,8 +12,9 @@ public class Ticker extends AbstractVerticle {
     @Override
     public void start() throws Exception {
         vertx.setPeriodic(5000, event -> {
-            vertx.eventBus().publish(Addresses.MAKE_REQUEST_ADDRESS,
-                    "bittrex"+ "BTC"+ "USD");
+            String message = "BTC/USD";
+            vertx.eventBus().publish(Addresses.BITFINEX_GET_RATE, message);
+            vertx.eventBus().publish(Addresses.BITTREX_GET_RATE, message);
         });
     }
 }
